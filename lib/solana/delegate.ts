@@ -5,15 +5,27 @@ export async function createDelegateTx(
   user: PublicKey,
   validatorVote: PublicKey,
 ) {
+  if (!stakeAccount || !user || !validatorVote) {
+    throw new Error(
+      "Stake account, user, and validator vote public keys are required",
+    );
+  }
+
   const tx = new Transaction();
 
-  tx.add(
-    StakeProgram.delegate({
-      stakePubkey: stakeAccount,
-      authorizedPubkey: user,
-      votePubkey: validatorVote,
-    }),
-  );
+  try {
+    tx.add(
+      StakeProgram.delegate({
+        stakePubkey: stakeAccount,
+        authorizedPubkey: user,
+        votePubkey: validatorVote,
+      }),
+    );
+  } catch (error) {
+    throw new Error(
+      `Failed to create delegate transaction: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
+  }
 
   return tx;
 }
