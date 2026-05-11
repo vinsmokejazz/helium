@@ -3,8 +3,6 @@
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import {
   WalletModalProvider,
-  WalletDisconnectButton,
-  WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
 
 export function SolanaWalletProvider({ children }: { children: React.ReactNode }) {
